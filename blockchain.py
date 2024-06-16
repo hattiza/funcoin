@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+from datetime import datetime, UTC
 from hashlib import sha256
 
 
@@ -12,13 +12,11 @@ class Blockchain(object):
         print("Creating genesis block")
         self.new_block()
 
-    def last_block(self):
-        return self.chain[-1] if self.chain else None
 
     def new_block(self, previous_hash=None):
         block = {
             "index": len(self.chain),
-            "timestamp": datetime.now(datetime.UTC).isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
             "transactions": self.pending_transactions,
             "previous_hash": previous_hash,
         }
@@ -32,11 +30,11 @@ class Blockchain(object):
     
     @staticmethod
     def hash(block):
-        pass
+        block_string = json.dumps(block, sort_keys=True).encode()
+        return sha256(block_string).hexdigest()
 
     def last_block(self):
-        pass
-
+        return self.chain[-1] if self.chain else None
 
     def new_transaction(self, sender, recipient, amount):
         self.pending_transactions.append({
