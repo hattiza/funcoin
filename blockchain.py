@@ -1,11 +1,35 @@
+import json
+from datetime import datetime
+from hashlib import sha256
+
+
+
 class Blockchain(object):
     def __init__(self):
         self.chain = []
         self.pending_transactions = []
 
-    def new_block(self):
-        pass
+        print("Creating genesis block")
+        self.new_block()
 
+    def last_block(self):
+        return self.chain[-1] if self.chain else None
+
+    def new_block(self, previous_hash=None):
+        block = {
+            "index": len(self.chain),
+            "timestamp": datetime.now(datetime.UTC).isoformat(),
+            "transactions": self.pending_transactions,
+            "previous_hash": previous_hash,
+        }
+        block_hash = self.hash(block)
+        block["hash"] = block_hash
+        self.pending_transactions  = []
+        self.chain.append(block)
+
+        print(f"Created block {block['index']}")
+        return block
+    
     @staticmethod
     def hash(block):
         pass
