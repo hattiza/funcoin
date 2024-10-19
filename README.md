@@ -1,5 +1,7 @@
 # BabyBlocks
 
+Follow-along for a book "Learn Blockchain by Building One: A Concise Path to Understanding Cryptocurrencies" by Daniel van Flymen
+
 ## Chapter 3: Initial blockchain
 
 ```python
